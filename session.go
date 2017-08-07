@@ -170,14 +170,19 @@ func (s Session) CaptchaImage(iden string) (image.Image, error) {
 }
 
 // SubredditComments gets all the new comments from a subreddit, returning them in a slice of Comment structs
-func (s Session) SubredditComments(subreddit string) ([]*Comment, error) {
+func (s Session) SubredditComments(subreddit string, params ListingOptions) ([]*Comment, error) {
+	v, err := query.Values(params)
+	if err != nil {
+		return nil, err
+	}
+
 	baseURL := "https://www.reddit.com"
-	
+
 	if subreddit != "" {
 		baseURL += "/r/" + subreddit
 	}
-	
-	subCommentsURL := baseURL + "/comments.json"
+
+	subCommentsURL := baseURL + "/comments.json?" + v.Encode()
 
 	req := request{
 		url:       subCommentsURL,

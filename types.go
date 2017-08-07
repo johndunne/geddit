@@ -72,6 +72,7 @@ type ListingOptions struct {
 	Count   int    `url:"count,omitempty"`
 	Show    string `url:"show,omitempty"`
 	Article string `url:"article,omitempty"`
+	Depth   int `url:"depth,omitempty"`
 }
 
 // Voter represents something that can be voted on reddit.com.
